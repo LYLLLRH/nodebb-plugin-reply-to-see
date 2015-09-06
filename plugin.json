@@ -1,0 +1,10 @@
+{
+	"id": "nodebb-plugin-reply-then-see",
+	"url": "https://github.com/LYLLLRH/nodebb-plugin-reply-then-see",
+	"library": "./library.js",
+	"hooks": [
+		{
+			"hook": "filter:post.getPosts", "method": "getPostContent"
+		}
+	]
+}

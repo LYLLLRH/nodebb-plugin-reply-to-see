@@ -1,0 +1,23 @@
+{
+  "name": "nodebb-plugin-reply-to-see",
+  "version": "0.0.1",
+  "description": "Reply a topic in order to see topic content",
+  "main": "library.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LYLLLRH/nodebb-plugin-move-to-reply.git"
+  },
+  "keywords": [
+    "nodebb",
+    "plugin",
+    "reply-to-see"
+  ],
+  "author": {
+    "name": "LYLLLRH",
+    "email": "LYLLLRH@163.com"
+  },
+  "license": "MIT",
+  "nbbpm": {
+    "compatibility": "^0.6.0 || ^0.7.0 || ^0.8.0"
+  }
+}
