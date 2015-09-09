@@ -4,7 +4,21 @@
 	"library": "./library.js",
 	"hooks": [
 		{
+			"hook": "static:app.load","method":"init"
+		},
+		{
 			"hook": "filter:post.getPosts", "method": "getPostContent"
+
 		}
-	]
+	],
+	"staticDirs": {
+		"static": "./static"
+	},
+	"less": [
+		"static/style.less"
+	],
+	"scripts": [
+		"static/lib/main.js"
+	],
+	"templates": "static/templates"
 }
