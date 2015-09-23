@@ -23,7 +23,9 @@ plugin.init = function(params,callback){
 plugin.getPostContent = function(data, callback) {	
 	var match = true;
 	var post;
-	Posts.getTopicFields(parseInt(data.posts[0].pid,10),['rtos'],function(err,fields){
+	
+	Posts.getTopicFields(parseInt(data.posts[0].pid,10),['title','rtos'],function(err,fields){
+
 		if (fields.rtos) {
 			match = false;
 			User.isAdministrator(data.uid,function(err,isAdmin){
@@ -37,7 +39,14 @@ plugin.getPostContent = function(data, callback) {
 						}
 					}
 				}
-			if (!match) {data.posts[0].content = "<code>[内容回复后并刷新后可见！]</code>";}
+			if (!match) {
+
+				if (fields.title.match(/题目测试/)) {
+					data.posts[0].content=data.posts[0].content.replace(/<p class="rtos">.*<\/p>/g,'<code>[内容回复后并刷新后可见！]</code>')
+				} else {
+					data.posts[0].content = "<code>[内容回复后并刷新后可见！]</code>";
+				}
+			}
 			callback (null,data);
 			})
 		} else {
