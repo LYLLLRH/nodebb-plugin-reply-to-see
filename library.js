@@ -3,6 +3,7 @@
 
 
 var winston = module.parent.require('winston'),
+
 	User = module.parent.require('./user'),
 	Posts = module.parent.require('./posts'),
 	Topics = module.parent.require('./topics'),
@@ -10,6 +11,7 @@ var winston = module.parent.require('winston'),
 	Meta = module.parent.require('./meta'),
 	db = module.parent.require('./database'),
 	async = module.parent.require('async'),
+	_ = module.parent.require('underscore'),
 	SocketPlugins = module.parent.require('./socket.io/plugins'),
 
 	plugin = {};
@@ -24,19 +26,18 @@ plugin.getPostContent = function(data, callback) {
 	var match = true;
 	var post;
 	
-	Posts.getTopicFields(parseInt(data.posts[0].pid,10),['title','rtos'],function(err,fields){
-
+	Topics.getTopicData(parseInt(data.posts[0].tid,10),function(err,fields){
+		console.log(data);
 		if (fields.rtos) {
 			match = false;
 			User.isAdministrator(data.uid,function(err,isAdmin){
-				if (isAdmin) {
+				if (isAdmin || data.uid == data.posts[0].uid) {
 					match = true;
 				} else {
-					for (post in data.posts) {
-						if (data.posts[post].uid == data.uid) {
-							match = true;
-							break;
-						}
+					if (fields.replyerIds) {
+						 if (_.indexOf(JSON.parse(fields.replyerIds),parseInt(data.uid)) >= 0 ) {
+						 	match = true;
+						 }
 					}
 				}
 			if (!match) {
@@ -54,6 +55,20 @@ plugin.getPostContent = function(data, callback) {
 		}
 	})
 };
+
+plugin.setReplyerId = function(data,callback) {
+	 Topics.getTopicData(parseInt(data.tid),function(err,fields){
+	 	if (fields.rtos) { 
+
+				var replyerIds = fields.replyerIds?JSON.parse(fields.replyerIds):[];
+				if ( _.indexOf(replyerIds,parseInt(data.uid)) === -1) {
+					replyerIds.push(parseInt(data.uid));
+					Topics.setTopicField(parseInt(data.tid),'replyerIds',JSON.stringify(replyerIds));
+				}
+		} 
+    })
+	callback(null,data);
+}
 
 function handleSocketIO() {
 	SocketPlugins.RtoS = {};

@@ -9,6 +9,9 @@
 		{
 			"hook": "filter:post.getPosts", "method": "getPostContent"
 
+		},
+		{
+			"hook": "filter:post.save", "method": "setReplyerId"
 		}
 	],
 	"staticDirs": {
