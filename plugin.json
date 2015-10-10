@@ -12,6 +12,9 @@
 		},
 		{
 			"hook": "filter:post.save", "method": "setReplyerId"
+		},
+		{
+			"hook": "filter:admin.header.build", "method": "addAdminNavigation"
 		}
 	],
 	"staticDirs": {
@@ -21,7 +24,8 @@
 		"static/style.less"
 	],
 	"scripts": [
-		"static/lib/main.js"
+		"static/lib/main.js",
+		"static/lib/admin.js"
 	],
 	"templates": "static/templates"
 }
