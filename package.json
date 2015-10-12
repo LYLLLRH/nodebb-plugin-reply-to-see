@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-reply-to-see",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Reply a topic in order to see topic content",
   "main": "library.js",
   "repository": {
