@@ -52,7 +52,7 @@ plugin.getPostContent = function(data, callback) {
 				if (!match) {
 					Meta.settings.get('reply2see', function (err, settings) {
 						if (fields.title.match(settings.title)) {
-							data.posts[0].content=data.posts[0].content.replace(/<p class="rtos">.*<\/p>/g,'<code>[内容回复后并刷新后可见！]</code>')
+							data.posts[0].content=data.posts[0].content.replace(/<p class="rtos">.*<\/p>/gm,'<code>[内容回复后并刷新后可见！]</code>')
 						} else {
 							data.posts[0].content = "<code>[内容回复后并刷新后可见！]</code>";
 						}
